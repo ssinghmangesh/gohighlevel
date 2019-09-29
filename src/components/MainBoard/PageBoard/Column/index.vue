@@ -16,6 +16,7 @@
     />
     <Add v-else
         @addElement="addElement"
+        @handleDrop="handleDrop"
     />
 </template>
 <script>
@@ -52,6 +53,9 @@ export default {
     methods: {
         addElement() {
             this.$emit('addElement', this.colIndex)
+        },
+        handleDrop() {
+            this.$emit("handleDrop", this.colIndex)
         }
     }
 

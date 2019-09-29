@@ -10,9 +10,17 @@
     <section class="hl_wrapper--inner page-creator" id="page-creator" :class="addClassPageCreator">
         <MainBoard 
             :pageDetails="pageDetails"
+            @addRowBelow="addRowBelow"
             @addElement="addElement"
             @openAddRowModal="isOpenAddRowModal = true"
             @openAddElementModal="isOpenAddElementModal = true"
+            @shiftRowUp="shiftRowUp"
+            @shiftRowDown="shiftRowDown"
+            @handleRowSettingClick="handleRowSettingClick"
+            @handleRowCloneclick="handleRowCloneclick"
+            @handleRowSaveClick="handleRowSaveClick"
+            @handleRowDeleteClick="handleRowDeleteClick"
+            @handleDrop="handleDrop"
         />
 
       <section class="hl_page-creator--settings-group">
@@ -362,6 +370,8 @@
             :isVisible="isOpenAddElementModal"
             @close="closeAddElementModal"
             @addElementItem="addElementItem"
+            @handleDragStart="handleDragStart"
+            @handleDragEvent="handleDragEvent"
         />
 
     </section>
@@ -391,7 +401,8 @@ export default {
             isOpenAddRowModal: false,
             isOpenAddElementModal: false,
             pageDetails:[],
-            selectedColumn: {}
+            selectedColumn: {},
+            dropElementIndex: {}
         }
     },
     computed: {
@@ -438,11 +449,54 @@ export default {
               type
             }
             const { columnIndex, rowIndex } = this.selectedColumn
-            console.log(this.pageDetails)
-            this.pageDetails[rowIndex].column[columnIndex] = col
-            let column = this.pageDetails[rowIndex].column
-            Vue.set(this.pageDetails[rowIndex], 'column', column)
-            console.log(this.pageDetails)
+            Vue.set(this.pageDetails[rowIndex].column, columnIndex, col)
+        },
+        shiftRowUp(index) {
+            if(index > 0) {
+                const temp = this.pageDetails[index - 1]
+                Vue.set(this.pageDetails, index - 1, this.pageDetails[index])
+                Vue.set(this.pageDetails, index, temp)
+            }
+        },
+        shiftRowDown(index) {
+            if(index < (this.pageDetails.length - 1)) {
+                const temp = this.pageDetails[index + 1]
+                Vue.set(this.pageDetails, index + 1, this.pageDetails[index])
+                Vue.set(this.pageDetails, index, temp)
+            }
+        },
+        handleRowSettingClick(index) {
+        },
+        handleRowCloneclick(index) {
+            let clone = this.pageDetails[index]
+            Vue.set(this.pageDetails, this.pageDetails.length, clone)
+        },
+        handleRowSaveClick(index) {
+        },
+        handleRowDeleteClick(index) {
+          let clone = this.pageDetails
+          clone.splice(index, 1);
+          this.pageDetails = clone
+        },
+        addRowBelow(index) {
+            this.isOpenAddRowModal = true
+            // let clone = this.pageDetails
+            // clone.splice(index + 1, 0, "Lene");
+            // this.pageDetails = clone
+            // console.log(index)
+        },
+        handleDragStart() {
+            this.isOpenAddElementModal = false
+        },
+        handleDragEvent(type) {
+            const { rowIndex, columnIndex } = this.dropElementIndex
+            let col = {
+                type
+            }
+            Vue.set(this.pageDetails[rowIndex].column, columnIndex, col)
+        },
+        handleDrop(data) {
+            this.dropElementIndex = data
         }
     }
     

@@ -2,17 +2,17 @@
     <div class="hl_page-creator--row" :class="classForActive" @mouseover="isActive = true" @mouseout="isActive = false">
         <div class="hl_page-creator--actions">
                 <div class="move-actions">
-                  <span data-tooltip="tooltip" data-placement="top" title="Up"><i class="icon icon-arrow-up-2"></i></span>
-                  <span data-tooltip="tooltip" data-placement="top" title="Down"><i class="icon icon-arrow-down-2"></i></span>
+                  <span data-tooltip="tooltip" data-placement="top" title="Up" @click="$emit('shiftRowUp', rowIndex)"><i class="icon icon-arrow-up-2"></i></span>
+                  <span data-tooltip="tooltip" data-placement="top" title="Down" @click="$emit('shiftRowDown', rowIndex)"><i class="icon icon-arrow-down-2"></i></span>
                 </div>
                 <div class="more-actions">
-                  <span data-tooltip="tooltip" data-placement="top" title="Settings"><i class="fas fa-cog"></i></span>
-                  <span data-tooltip="tooltip" data-placement="top" title="Clone"><i class="far fa-eye"></i></span>
-                  <span data-tooltip="tooltip" data-placement="top" title="Save"><i class="far fa-copy"></i></span>
-                  <span data-tooltip="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt"></i></span>
+                  <span data-tooltip="tooltip" data-placement="top" @click="$emit('handleRowSettingClick', rowIndex)" title="Settings"><i class="fas fa-cog"></i></span>
+                  <span data-tooltip="tooltip" data-placement="top" @click="$emit('handleRowCloneclick', rowIndex)" title="Clone"><i class="far fa-copy"></i></span>
+                  <span data-tooltip="tooltip" data-placement="top" @click="$emit('handleRowSaveClick', rowIndex)" title="Save"><i class="far fa-eye"></i></span>
+                  <span data-tooltip="tooltip" data-placement="top" @click="$emit('handleRowDeleteClick', rowIndex)" title="Delete"><i class="far fa-trash-alt"></i></span>
                 </div>
         </div>
-            <span class="add-new-row" data-tooltip="tooltip" data-placement="bottom" title="Add New Row"><i class="icon icon-plus"></i></span>
+            <span class="add-new-row" data-tooltip="tooltip" data-placement="bottom" title="Add New Row" @click="$emit('addRowBelow', rowIndex)"><i class="icon icon-plus"></i></span>
               
             <Column
                 v-for="(column, colIndex) in row.column"
@@ -20,6 +20,7 @@
                 :colIndex="colIndex"
                 :column="column"
                 @addElement="addElement"
+                @handleDrop="handleDrop"
             />
     </div>
 </template>
@@ -57,6 +58,13 @@ export default {
                 rowIndex,
                 columnIndex
             })
+        },
+        handleDrop(index) {
+            let data = {
+                rowIndex: this.rowIndex,
+                columnIndex: index
+            }
+            this.$emit('handleDrop', data)
         }
     }
 }

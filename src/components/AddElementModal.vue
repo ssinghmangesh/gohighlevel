@@ -37,25 +37,37 @@
                   <div class="element-group">
                     <h4>Text</h4>
                     <div class="element-cards">
-                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.HEADLINE)">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.HEADLINE)"
+                          draggable="true"
+                          @dragstart="$emit('handleDragStart')"
+                          @dragend="handleDragEvent(ELEMENT_TYPE.HEADLINE, $event)">
                         <div class="icon">
                           <i class="fas fa-heading"></i>
                         </div>
                         <h5>Headline</h5>
                       </div>
-                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.SUB_HEADLINE)">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.SUB_HEADLINE)"
+                          draggable="true"
+                          @dragstart="$emit('handleDragStart')"
+                          @dragend="handleDragEvent(ELEMENT_TYPE.SUB_HEADLINE, $event)">
                         <div class="icon">
                           <i class="fas fa-font"></i>
                         </div>
                         <h5>Sub-headline</h5>
                       </div>
-                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.PARAGRAPH)">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.PARAGRAPH)"
+                          draggable="true"
+                          @dragstart="$emit('handleDragStart')"
+                          @dragend="handleDragEvent(ELEMENT_TYPE.PARAGRAPH, $event)">
                         <div class="icon">
                           <i class="fas fa-paragraph"></i>
                         </div>
                         <h5>Paragraph</h5>
                       </div>
-                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.BULLET_LIST)">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.BULLET_LIST)"
+                          draggable="true"
+                          @dragstart="$emit('handleDragStart')"
+                          @dragend="handleDragEvent(ELEMENT_TYPE.BULLET_LIST, $event)">
                         <div class="icon">
                           <i class="fas fa-list"></i>
                         </div>
@@ -66,7 +78,11 @@
                   <div class="element-group">
                     <h4>Media</h4>
                     <div class="element-cards">
-                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.IMAGE)">
+                      <div class="element-card" 
+                          @click="$emit('addElementItem', ELEMENT_TYPE.IMAGE)" 
+                          draggable="true"
+                          @dragstart="$emit('handleDragStart')"
+                          @dragend="handleDragEvent(ELEMENT_TYPE.IMAGE, $event)">
                         <div class="icon">
                           <i class="fas fa-image"></i>
                         </div>
@@ -485,6 +501,11 @@ export default {
             }
             return []
         },
+    },
+    methods: {
+        handleDragEvent(type, $event) {
+            this.$emit("handleDragEvent", type)
+        }
     }
     
 }

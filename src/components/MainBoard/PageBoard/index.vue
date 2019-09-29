@@ -1,27 +1,43 @@
 
 <template>
     <div>
-        <Row 
-            v-for="(row,rowIndex) in pageDetails" 
-            :key="rowIndex"
-            :row="row"
-            :rowIndex="rowIndex"
-            @addElement="addElement"
-        />
-    
+        <draggable v-model="rows">
+            <Row 
+                v-for="(row,rowIndex) in rows" 
+                :key="rowIndex"
+                :row="row"
+                :rowIndex="rowIndex"
+                @addRowBelow="addRowBelow"
+                @addElement="addElement"
+                @shiftRowUp="shiftRowUp"
+                @shiftRowDown="shiftRowDown"
+                @handleRowSettingClick="handleRowSettingClick"
+                @handleRowCloneclick="handleRowCloneclick"
+                @handleRowSaveClick="handleRowSaveClick"
+                @handleRowDeleteClick="handleRowDeleteClick"
+                @handleDrop="handleDrop"
+            />
+        </draggable>
                 
     </div>
 </template>
 <script>
+import draggable from 'vuedraggable'
 import Row from './Row'
 export default {
     components: {
-        Row
+        Row,
+        draggable
     },
     props: {
         pageDetails: {
             type: Array,
             required: true
+        }
+    },
+    data() {
+        return {
+            rows:[]
         }
     },
     methods: {
@@ -30,6 +46,35 @@ export default {
         },
         addElement(data) {
             this.$emit('addElement', data)
+        },
+        shiftRowUp(index) {
+            this.$emit("shiftRowUp",index)
+        },
+        shiftRowDown(index) {
+            this.$emit("shiftRowDown",index)
+        },
+        handleRowSettingClick(index) {
+            this.$emit("handleRowSettingClick",index)
+        },
+        handleRowCloneclick(index) {
+            this.$emit("handleRowCloneclick",index)
+        },
+        handleRowSaveClick(index) {
+            this.$emit("handleRowSaveClick",index)
+        },
+        handleRowDeleteClick(index) {
+            this.$emit("handleRowDeleteClick",index)
+        },
+        addRowBelow(index){
+            this.$emit("addRowBelow",index)
+        },
+        handleDrop(data) {
+            this.$emit("handleDrop",data)
+        }
+    },
+    watch: {
+        pageDetails(val) {
+            this.rows = val
         }
     }
 }

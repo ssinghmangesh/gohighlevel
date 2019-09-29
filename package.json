@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "prod": "webpack",
     "start": "npm run dev",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit",
@@ -15,6 +16,7 @@
     "element-ui": "^2.11.1",
     "less": "^3.9.0",
     "vue": "^2.5.2",
+    "vue-draggable": "^2.0.2",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.23.0"
   },

@@ -10,10 +10,19 @@
         <div class="hl_page-creator--content" :class="addClassForMobileView">
             <PageBoard 
                 :pageDetails="pageDetails"
+                @addRowBelow="addRowBelow"
                 @addElement="addElement"
+                @shiftRowUp="shiftRowUp"
+                @shiftRowDown="shiftRowDown"
+                @handleRowSettingClick="handleRowSettingClick"
+                @handleRowCloneclick="handleRowCloneclick"
+                @handleRowSaveClick="handleRowSaveClick"
+                @handleRowDeleteClick="handleRowDeleteClick"
+                @handleDrop="handleDrop"
             />
 
             <AddRowWidgets 
+                v-if="this.pageDetails.length === 0"
                 @addRow="addRow"
             />  
 
@@ -190,6 +199,30 @@ export default {
         },
         addElement(data) {
             this.$emit('addElement', data)
+        },
+        shiftRowUp(index) {
+            this.$emit("shiftRowUp",index)
+        },
+        shiftRowDown(index) {
+            this.$emit("shiftRowDown",index)
+        },
+        handleRowSettingClick(index) {
+            this.$emit("handleRowSettingClick",index)
+        },
+        handleRowCloneclick(index) {
+            this.$emit("handleRowCloneclick",index)
+        },
+        handleRowSaveClick(index) {
+            this.$emit("handleRowSaveClick",index)
+        },
+        handleRowDeleteClick(index) {
+            this.$emit("handleRowDeleteClick",index)
+        },
+        addRowBelow(index){
+            this.$emit("addRowBelow",index)
+        },
+        handleDrop(data) {
+            this.$emit("handleDrop",data)
         }
     }
 }
