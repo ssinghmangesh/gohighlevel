@@ -413,4 +413,6 @@ export default {
     
 }
 </script>
-
+<style>
+  @import './assets/css/styles.min.css';
+</style>
