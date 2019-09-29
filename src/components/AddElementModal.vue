@@ -37,25 +37,25 @@
                   <div class="element-group">
                     <h4>Text</h4>
                     <div class="element-cards">
-                      <div class="element-card">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.HEADLINE)">
                         <div class="icon">
                           <i class="fas fa-heading"></i>
                         </div>
                         <h5>Headline</h5>
                       </div>
-                      <div class="element-card">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.SUB_HEADLINE)">
                         <div class="icon">
                           <i class="fas fa-font"></i>
                         </div>
                         <h5>Sub-headline</h5>
                       </div>
-                      <div class="element-card">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.PARAGRAPH)">
                         <div class="icon">
                           <i class="fas fa-paragraph"></i>
                         </div>
                         <h5>Paragraph</h5>
                       </div>
-                      <div class="element-card">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.BULLET_LIST)">
                         <div class="icon">
                           <i class="fas fa-list"></i>
                         </div>
@@ -66,7 +66,7 @@
                   <div class="element-group">
                     <h4>Media</h4>
                     <div class="element-cards">
-                      <div class="element-card">
+                      <div class="element-card" @click="$emit('addElementItem', ELEMENT_TYPE.IMAGE)">
                         <div class="icon">
                           <i class="fas fa-image"></i>
                         </div>
@@ -465,12 +465,18 @@
       </section>
 </template>
 <script>
+import { ELEMENT_TYPE } from './CONSTANTS.js'
 export default {
     props: {
         isVisible: {
             type: Boolean,
             required: true
         },
+    },
+    data() {
+      return {
+        ELEMENT_TYPE
+      }
     },
     computed: {
         addClassForAddElementModal() {

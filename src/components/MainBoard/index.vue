@@ -7,9 +7,14 @@
             @openAddElementModal="$emit('openAddElementModal')"
         />
 
-        <div class="hl_page-creator--content" :class="addClassForMobileView" style="margin-top:80px;">
+        <div class="hl_page-creator--content" :class="addClassForMobileView">
+            <PageBoard 
+                :pageDetails="pageDetails"
+                @addElement="addElement"
+            />
 
             <AddRowWidgets 
+                @addRow="addRow"
             />  
 
           <!-- <section class="hl_page-creator--section" style="background-color: #f4f4f4; padding: 80px 0; text-align: center;">
@@ -151,12 +156,17 @@
 <script>
 import OptionMenu from './OptionMenu'
 import AddRowWidgets from './AddRowWidgets'
+import PageBoard from './PageBoard'
 export default {
     components: {
         OptionMenu,
-        AddRowWidgets
+        AddRowWidgets,
+        PageBoard
     },
     props: {
+      pageDetails: {
+        required: true
+      }
     },
     data() {
         return {
@@ -174,6 +184,12 @@ export default {
     methods: {
         viewTypeChange(val) {
             this.isMobile = val
+        },
+        addRow() {
+            this.$emit('openAddRowModal')
+        },
+        addElement(data) {
+            this.$emit('addElement', data)
         }
     }
 }

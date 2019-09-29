@@ -8,55 +8,12 @@
                 <h2>Add Row</h2>
                 <div class="add-row-body">
                   <div class="row-cards">
-                    <div class="row-card">
-                      <div class="icon">
-                        <i class="fas fa-columns"></i>
-                      </div>
-                      <h5>1 Column</h5>
-                    </div>
-                    <div class="row-card">
-                      <div class="icon">
-                        <i class="fas fa-columns"></i>
-                      </div>
-                      <h5>2 Column</h5>
-                    </div>
-                    <div class="row-card">
-                      <div class="icon">
-                        <i class="fas fa-columns"></i>
-                      </div>
-                      <h5>3 Column</h5>
-                    </div>
-                    <div class="row-card">
-                      <div class="icon">
-                        <i class="fas fa-columns"></i>
-                      </div>
-                      <h5>4 Column</h5>
-                    </div>
-                    <div class="row-card">
-                      <div class="icon">
-                        <i class="fas fa-columns"></i>
-                      </div>
-                      <h5>5 Column</h5>
-                    </div>
-                    <div class="row-card">
-                      <div class="icon">
-                        <i class="fas fa-columns"></i>
-                      </div>
-                      <h5>6 Column</h5>
-                    </div>
-                    <div class="row-card">
-                      <div class="icon">
-                        <i class="fas fa-columns"></i>
-                      </div>
-                      <h5>Left Sidebar</h5>
-                    </div>
-                    <div class="row-card">
-                      <div class="icon">
-                        <i class="fas fa-columns"></i>
-                      </div>
-                      <h5>Right Sidebar</h5>
-                    </div>
-
+                      <ColumnChoice 
+                        v-for="(item, index) in columnOptions"
+                        :key="index"
+                        :item="item"
+                        @addRow="addRow"
+                      />
                   </div>
                 </div>
               </div>
@@ -148,12 +105,21 @@
       </section>
 </template>
 <script>
+import ColumnChoice from './ColumnChoice'
 export default {
+  components: {
+    ColumnChoice
+  },
     props: {
         isVisible: {
             type: Boolean,
             required: true
         },
+    },
+    data() {
+      return  {
+        columnOptions: 10
+      }
     },
     computed: {
         addClassForAddRowModal() {
@@ -162,6 +128,11 @@ export default {
             }
             return []
         },
+    },
+    methods: {
+      addRow(val) {
+        this.$emit("addRow", val)
+      },
     }
     
 }

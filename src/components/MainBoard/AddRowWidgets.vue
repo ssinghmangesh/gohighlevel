@@ -14,7 +14,7 @@
         </div>
       </div>
       <span class="add-new-section" data-tooltip="tooltip" data-placement="bottom" title="Add New Section"><i class="icon icon-plus"></i></span>
-      <div href="#" class="new-row-blank">
+      <div href="#" class="new-row-blank" @click="$emit('addRow')">
         <span class="btn btn-light5 btn-slim">Add New Row</span>
       </div>
     </section>

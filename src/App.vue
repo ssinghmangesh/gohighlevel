@@ -9,6 +9,8 @@
 
     <section class="hl_wrapper--inner page-creator" id="page-creator" :class="addClassPageCreator">
         <MainBoard 
+            :pageDetails="pageDetails"
+            @addElement="addElement"
             @openAddRowModal="isOpenAddRowModal = true"
             @openAddElementModal="isOpenAddElementModal = true"
         />
@@ -280,6 +282,7 @@
         <AddColumnModal 
             :isVisible="isOpenAddRowModal"
             @close="closeAddRowModal"
+            @addRow="addRow"
         />
 
       <section class="hl_page-creator--columns-group">
@@ -358,6 +361,7 @@
         <AddElementModal 
             :isVisible="isOpenAddElementModal"
             @close="closeAddElementModal"
+            @addElementItem="addElementItem"
         />
 
     </section>
@@ -368,6 +372,7 @@
 </div> 
 </template>
 <script>
+import Vue from 'vue';
 import SideNav from './components/SideNav'
 import Header from './components/Header'
 import MainBoard from './components/MainBoard'
@@ -384,7 +389,9 @@ export default {
     data() {
         return {
             isOpenAddRowModal: false,
-            isOpenAddElementModal: false
+            isOpenAddElementModal: false,
+            pageDetails:[],
+            selectedColumn: {}
         }
     },
     computed: {
@@ -408,6 +415,34 @@ export default {
         },
         closeAddElementModal() {
             this.isOpenAddElementModal = false
+        },
+        addRow(columnIndex) {
+          let column = []
+          for(let index = 0; index < columnIndex; index++){
+              column.push({})
+          }
+            this.pageDetails.push({
+                column
+            }) 
+            this.closeAddRowModal()
+            console.log(this.pageDetails)
+        },
+        addElement(data) {
+            this.selectedColumn = data
+            this.isOpenAddElementModal = true
+        },
+        addElementItem(type) {
+            this.isOpenAddElementModal = false
+            console.log(type)
+            let col = {
+              type
+            }
+            const { columnIndex, rowIndex } = this.selectedColumn
+            console.log(this.pageDetails)
+            this.pageDetails[rowIndex].column[columnIndex] = col
+            let column = this.pageDetails[rowIndex].column
+            Vue.set(this.pageDetails[rowIndex], 'column', column)
+            console.log(this.pageDetails)
         }
     }
     
