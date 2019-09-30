@@ -393,6 +393,8 @@
             :pageDetails="pageDetails"
             @close="isShowPreviewOpen = false"/>
 
+        <Appdetails />   
+
     </section>
 
   </section>
@@ -410,6 +412,7 @@ import AddElementModal from './components/AddElementModal'
 import AddElementDataModal from './components/AddElementDataModal'
 import ShowPreview from './components/ShowPreview'
 import SaveData from './components/SaveData'
+import Appdetails from './components/Appdetails'
 export default {
     components: {
         SideNav,
@@ -419,7 +422,8 @@ export default {
         AddElementModal,
         AddElementDataModal,
         ShowPreview,
-        SaveData
+        SaveData,
+        Appdetails
     },
     data() {
         return {
