@@ -1,18 +1,33 @@
 <template>
     <Heading 
         v-if="type === 'HEADLINE'"
+        :column="column"
+        :preview="preview"
+        @handleDBClickElement="handleDBClickElement"
     />
     <SubHeading 
         v-else-if="type === 'SUB_HEADLINE'"
+        :column="column"
+        :preview="preview"
+        @handleDBClickElement="handleDBClickElement"
     />
     <Paragraph 
         v-else-if="type === 'PARAGRAPH'"
+        :column="column"
+        :preview="preview"
+        @handleDBClickElement="handleDBClickElement"
     />
     <ImageContainer 
         v-else-if="type === 'IMAGE'"
+        :column="column"
+        :preview="preview"
+        @handleDBClickElement="handleDBClickElement"
     />
     <List 
         v-else-if="type === 'BULLET_LIST'"
+        :column="column"
+        :preview="preview"
+        @handleDBClickElement="handleDBClickElement"
     />
     <Add v-else
         @addElement="addElement"
@@ -36,6 +51,10 @@ export default {
         Add,
     },
     props: {
+        preview: {
+            type:Boolean,
+            required: true
+        },
         colIndex: {
             type: Number,
             required: true
@@ -56,6 +75,13 @@ export default {
         },
         handleDrop() {
             this.$emit("handleDrop", this.colIndex)
+        },
+        handleDBClickElement(type) {
+            let data = { 
+                type,
+                columnIndex: this.colIndex
+            }
+            this.$emit('handleDBClickElement', data)
         }
     }
 

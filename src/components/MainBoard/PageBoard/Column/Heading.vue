@@ -1,6 +1,6 @@
 <template>
     <div class="hl_page-creator--column">
-        <div class="hl_page-creator--element" :class="activeClass"  @mouseenter="isActive = true" @mouseleave="isActive = false">
+        <div class="hl_page-creator--element" :class="activeClass" @dblclick="$emit('handleDBClickElement', ELEMENT_TYPE.HEADLINE)" @mouseenter="handleMouseOver" @mouseleave="handleMouseOut">
           <div class="hl_page-creator--actions">
             <div class="more-actions">
               <span data-tooltip="tooltip" data-placement="top" title="Move"><i class="fas fa-arrows-alt"></i></span>
@@ -11,16 +11,27 @@
           </div>
           <span class="add-new-element" data-tooltip="tooltip" data-placement="bottom" title="Add New Element"><i class="icon icon-plus"></i></span>
           <div class="element-container">
-            <h3>Heading Text Goes Here</h3>
+            <h3>{{ text }}</h3>
           </div>
         </div>
     </div>
 </template>
 <script>
+import { ELEMENT_TYPE } from '../../../CONSTANTS.js'
 export default {
+    props: {
+        column: {
+            required: true
+        },
+        preview: {
+            type:Boolean,
+            required: true
+        },
+    },
     data() {
         return {
-            isActive: false
+            isActive: false,
+            ELEMENT_TYPE
         }
     },
     computed: {
@@ -29,7 +40,21 @@ export default {
                 return ['active']
             }
             return []
+        },
+        text() {
+            return this.column.text || 'Heading Text Goes Here'
         }
+    },
+    methods: {
+        handleMouseOver(){
+            if(!this.preview){
+                this.isActive = true
+            }
+        },
+        handleMouseOut(){
+            this.isActive = false
+        }
+
     }
 }
 </script>

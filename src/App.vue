@@ -21,6 +21,10 @@
             @handleRowSaveClick="handleRowSaveClick"
             @handleRowDeleteClick="handleRowDeleteClick"
             @handleDrop="handleDrop"
+            @rowsPositionChanged="rowsPositionChanged"
+            @handleDBClickElement="handleDBClickElement"
+            @showPreview="isShowPreviewOpen = true"
+            @savePageData="savePageData"
         />
 
       <section class="hl_page-creator--settings-group">
@@ -364,7 +368,11 @@
           </div>
         </div>
       </section>
-
+        <AddElementDataModal 
+            :isVisible="isopenAddElementDataModal"
+            @submit="handleElementDataSubmit"
+            @close="handleAddElementDataClose"
+        />
       
         <AddElementModal 
             :isVisible="isOpenAddElementModal"
@@ -373,6 +381,17 @@
             @handleDragStart="handleDragStart"
             @handleDragEvent="handleDragEvent"
         />
+        <div @click="isSaveOpen = true"> Show previous save data preview !!!</div>
+        <SaveData 
+            v-if="isSaveOpen"
+            :isActive="isSaveOpen"
+            :pageDetails="pageDetails"
+            @close="isSaveOpen = false"
+        />
+        <ShowPreview 
+            :isActive="isShowPreviewOpen"
+            :pageDetails="pageDetails"
+            @close="isShowPreviewOpen = false"/>
 
     </section>
 
@@ -388,18 +407,27 @@ import Header from './components/Header'
 import MainBoard from './components/MainBoard'
 import AddColumnModal from './components/AddColumnModal'
 import AddElementModal from './components/AddElementModal'
+import AddElementDataModal from './components/AddElementDataModal'
+import ShowPreview from './components/ShowPreview'
+import SaveData from './components/SaveData'
 export default {
     components: {
         SideNav,
         Header,
         MainBoard,
         AddColumnModal,
-        AddElementModal
+        AddElementModal,
+        AddElementDataModal,
+        ShowPreview,
+        SaveData
     },
     data() {
         return {
             isOpenAddRowModal: false,
             isOpenAddElementModal: false,
+            isopenAddElementDataModal: false,
+            isShowPreviewOpen: false,
+            isSaveOpen: false,
             pageDetails:[],
             selectedColumn: {},
             dropElementIndex: {}
@@ -407,7 +435,7 @@ export default {
     },
     computed: {
         addClassPageCreator() {
-            if(this.isOpenAddRowModal || this.isOpenAddElementModal) {
+            if(this.isOpenAddRowModal || this.isOpenAddElementModal || this.isopenAddElementDataModal) {
                 return [' --menu-active']
             }
             return []
@@ -497,6 +525,29 @@ export default {
         },
         handleDrop(data) {
             this.dropElementIndex = data
+        },
+        rowsPositionChanged(rows) {
+            //for(let index = 0; index < rows.length; index++) {
+            //    Vue.set(this.pageDetails, index, rows[index])
+            //}
+        },
+        handleDBClickElement(data) {
+            this.selectedColumn = data
+            this.isopenAddElementDataModal = true
+        },
+        handleAddElementDataClose() {
+          this.isopenAddElementDataModal = false
+          this.selectedColumn = {}
+        },
+        handleElementDataSubmit(data) {
+            const { columnIndex, rowIndex } = this.selectedColumn
+            const { text } = data
+            let column = this.pageDetails[rowIndex].column[columnIndex]
+            Vue.set(this.pageDetails[rowIndex].column, columnIndex,  {...column, text })
+            this.handleAddElementDataClose()
+        },
+        savePageData() {
+            localStorage.setItem( 'details', JSON.stringify(this.pageDetails));
         }
     }
     

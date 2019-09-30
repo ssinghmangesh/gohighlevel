@@ -5,10 +5,13 @@
             @viewTypeChange="viewTypeChange"
             @openAddRowModal="$emit('openAddRowModal')"
             @openAddElementModal="$emit('openAddElementModal')"
+            @showPreview="$emit('showPreview')"
+            @save="$emit('savePageData')"
         />
 
         <div class="hl_page-creator--content" :class="addClassForMobileView">
             <PageBoard 
+                :preview="false"
                 :pageDetails="pageDetails"
                 @addRowBelow="addRowBelow"
                 @addElement="addElement"
@@ -19,6 +22,8 @@
                 @handleRowSaveClick="handleRowSaveClick"
                 @handleRowDeleteClick="handleRowDeleteClick"
                 @handleDrop="handleDrop"
+                @rowsPositionChanged="rowsPositionChanged"
+                @handleDBClickElement="handleDBClickElement"
             />
 
             <AddRowWidgets 
@@ -223,6 +228,12 @@ export default {
         },
         handleDrop(data) {
             this.$emit("handleDrop",data)
+        },
+        rowsPositionChanged(rows) {
+            this.$emit('rowsPositionChanged', rows)
+        },
+        handleDBClickElement(data) {
+            this.$emit('handleDBClickElement', data)
         }
     }
 }

@@ -65,9 +65,9 @@
               </div>
             </div>
             <div class="btn-group">
-              <button type="button" class="btn btn-light btn-sm" data-tooltip="tooltip" data-placement="top" title="Preview"><i class="far fa-eye"></i><span class="btn-text">Preview</span>
+              <button type="button" class="btn btn-light btn-sm" data-tooltip="tooltip" data-placement="top" title="Preview" @click="$emit('showPreview')"><i class="far fa-eye"></i><span class="btn-text">Preview</span>
               </button>
-              <button type="button" class="btn btn-light btn-sm" data-tooltip="tooltip" data-placement="top" title="Save"><i class="far fa-save"></i><span class="btn-text">Save</span>
+              <button type="button" class="btn btn-light btn-sm" data-tooltip="tooltip" data-placement="top" title="Save" @click="$emit('save')"><i class="far fa-save"></i><span class="btn-text">Save</span>
               </button>
             </div>
           </div>

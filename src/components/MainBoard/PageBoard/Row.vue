@@ -1,5 +1,5 @@
 <template>
-    <div class="hl_page-creator--row" :class="classForActive" @mouseover="isActive = true" @mouseout="isActive = false">
+    <div class="hl_page-creator--row" :class="classForActive" @mouseover="handleMouseOver" @mouseout="handleMouseOut">
         <div class="hl_page-creator--actions">
                 <div class="move-actions">
                   <span data-tooltip="tooltip" data-placement="top" title="Up" @click="$emit('shiftRowUp', rowIndex)"><i class="icon icon-arrow-up-2"></i></span>
@@ -19,8 +19,10 @@
                 :key="colIndex"
                 :colIndex="colIndex"
                 :column="column"
+                :preview="preview"
                 @addElement="addElement"
                 @handleDrop="handleDrop"
+                @handleDBClickElement="handleDBClickElement"
             />
     </div>
 </template>
@@ -35,6 +37,10 @@ export default {
             required: true
         },
         rowIndex: {
+            required: true
+        },
+        preview: {
+            type:Boolean,
             required: true
         }
     },
@@ -65,6 +71,20 @@ export default {
                 columnIndex: index
             }
             this.$emit('handleDrop', data)
+        },
+        handleDBClickElement(data) {
+            let d = {
+                ...data,
+                rowIndex: this.rowIndex
+            }
+            this.$emit('handleDBClickElement', d)
+        },
+        handleMouseOver(e){
+            if(!this.preview)
+                this.isActive = true
+        },
+        handleMouseOut(e){
+            this.isActive = false
         }
     }
 }

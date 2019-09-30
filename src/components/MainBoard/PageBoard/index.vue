@@ -7,6 +7,7 @@
                 :key="rowIndex"
                 :row="row"
                 :rowIndex="rowIndex"
+                :preview="preview"
                 @addRowBelow="addRowBelow"
                 @addElement="addElement"
                 @shiftRowUp="shiftRowUp"
@@ -16,12 +17,14 @@
                 @handleRowSaveClick="handleRowSaveClick"
                 @handleRowDeleteClick="handleRowDeleteClick"
                 @handleDrop="handleDrop"
+                @handleDBClickElement="handleDBClickElement"
             />
         </draggable>
                 
     </div>
 </template>
 <script>
+import Vue from 'vue';
 import draggable from 'vuedraggable'
 import Row from './Row'
 export default {
@@ -33,12 +36,19 @@ export default {
         pageDetails: {
             type: Array,
             required: true
+        },
+        preview: {
+            type:Boolean,
+            required: true
         }
     },
     data() {
         return {
             rows:[]
         }
+    },
+    mounted() {
+        this.rows = this.pageDetails
     },
     methods: {
         numberOfColumn(row) {
@@ -70,11 +80,20 @@ export default {
         },
         handleDrop(data) {
             this.$emit("handleDrop",data)
+        },
+        handleDBClickElement(data) {
+            this.$emit('handleDBClickElement', data)
         }
     },
     watch: {
         pageDetails(val) {
             this.rows = val
+            //for(let index = 0; index < val.length; index++) {
+            //    Vue.set(this.rows, index, val[index])
+            //}
+        },
+        rows(val){
+            this.$emit('rowsPositionChanged', val)
         }
     }
 }
