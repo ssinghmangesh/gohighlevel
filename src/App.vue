@@ -368,6 +368,7 @@
           </div>
         </div>
       </section>
+
         <AddElementDataModal 
             :isVisible="isopenAddElementDataModal"
             @submit="handleElementDataSubmit"
@@ -391,7 +392,8 @@
         <ShowPreview 
             :isActive="isShowPreviewOpen"
             :pageDetails="pageDetails"
-            @close="isShowPreviewOpen = false"/>
+            @close="isShowPreviewOpen = false"
+        />
 
         <Appdetails />   
 
@@ -468,7 +470,6 @@ export default {
                 column
             }) 
             this.closeAddRowModal()
-            console.log(this.pageDetails)
         },
         addElement(data) {
             this.selectedColumn = data
@@ -476,7 +477,6 @@ export default {
         },
         addElementItem(type) {
             this.isOpenAddElementModal = false
-            console.log(type)
             let col = {
               type
             }

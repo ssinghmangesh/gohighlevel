@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import { ELEMENT_TYPE } from '../../../CONSTANTS.js'
+import { ELEMENT_TYPE, DEFAULT_VALUE } from '../../../CONSTANTS.js'
 export default {
     props: {
         column: {
@@ -38,7 +38,7 @@ export default {
             return []
         },
         text() {
-            return this.column.text || 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus sint at cum ratione, itaque quas assumenda consequatur, exercitationem ipsa necessitatibus, eaque nemo aliquid quasi. Doloremque dolor pariatur ea quod distinctio?'
+            return this.column.text || DEFAULT_VALUE.TEXT
         }
     },
     methods: {

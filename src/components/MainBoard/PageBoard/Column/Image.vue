@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import { ELEMENT_TYPE } from '../../../CONSTANTS.js'
+import { ELEMENT_TYPE, DEFAULT_VALUE } from '../../../CONSTANTS.js'
 export default {
     props: {
         column: {
@@ -38,7 +38,7 @@ export default {
             return []
         },
         text() {
-            return this.column.text || 'https://image.shutterstock.com/image-photo/large-beautiful-drops-transparent-rain-260nw-668593321.jpg'
+            return this.column.text || DEFAULT_VALUE.IMAGE_URL
         }
     },
     methods: {

@@ -1,30 +1,30 @@
 <template>
     <Heading 
-        v-if="type === 'HEADLINE'"
+        v-if="type === ELEMENT_TYPE.HEADLINE"
         :column="column"
         :preview="preview"
         @handleDBClickElement="handleDBClickElement"
     />
     <SubHeading 
-        v-else-if="type === 'SUB_HEADLINE'"
+        v-else-if="type === ELEMENT_TYPE.SUB_HEADLINE"
         :column="column"
         :preview="preview"
         @handleDBClickElement="handleDBClickElement"
     />
     <Paragraph 
-        v-else-if="type === 'PARAGRAPH'"
+        v-else-if="type === ELEMENT_TYPE.PARAGRAPH"
         :column="column"
         :preview="preview"
         @handleDBClickElement="handleDBClickElement"
     />
     <ImageContainer 
-        v-else-if="type === 'IMAGE'"
+        v-else-if="type === ELEMENT_TYPE.IMAGE"
         :column="column"
         :preview="preview"
         @handleDBClickElement="handleDBClickElement"
     />
     <List 
-        v-else-if="type === 'BULLET_LIST'"
+        v-else-if="type === ELEMENT_TYPE.BULLET_LIST"
         :column="column"
         :preview="preview"
         @handleDBClickElement="handleDBClickElement"
@@ -41,6 +41,8 @@ import Paragraph from './Paragraph'
 import ImageContainer from './Image'
 import List from './List'
 import Add from './Add'
+import { ELEMENT_TYPE } from './../../../CONSTANTS.js'
+
 export default {
     components: {
         Heading,
@@ -62,6 +64,11 @@ export default {
         column: {
             type: Object,
             required: true
+        }
+    },
+    data() {
+        return {
+            ELEMENT_TYPE
         }
     },
     computed: {

@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import { ELEMENT_TYPE } from '../../../CONSTANTS.js'
+import { ELEMENT_TYPE, DEFAULT_VALUE } from '../../../CONSTANTS.js'
 export default {
     props: {
         column: {
@@ -42,7 +42,7 @@ export default {
             return []
         },
         text() {
-            return this.column.text || 'Heading Text Goes Here'
+            return this.column.text || DEFAULT_VALUE.HEADLINE
         }
     },
     methods: {
