@@ -382,11 +382,11 @@
             @handleDragStart="handleDragStart"
             @handleDragEvent="handleDragEvent"
         />
-        <div @click="isSaveOpen = true"> Show previous save data preview !!!</div>
+        <div @click="displaySaveData"> Show previous save data preview !!!</div>
         <SaveData 
             v-if="isSaveOpen"
             :isActive="isSaveOpen"
-            :pageDetails="pageDetails"
+            :pageDetails="pageDetails || []"
             @close="isSaveOpen = false"
         />
         <ShowPreview 
@@ -455,6 +455,15 @@ export default {
         }
     },
     methods: {
+        displaySaveData() {
+            let data = JSON.parse(localStorage.getItem('details')) || []
+            console.log("data : ", data)
+            if(data && Array.isArray(data)) {
+              this.pageDetails = data
+            } else {
+              console.log("error in displaySaveData")
+            }
+        },
         closeAddRowModal() {
             this.isOpenAddRowModal = false
         },
@@ -500,7 +509,8 @@ export default {
         handleRowSettingClick(index) {
         },
         handleRowCloneclick(index) {
-            let clone = this.pageDetails[index]
+            let c = this.pageDetails[index]
+            let clone = Object.assign({}, c)
             Vue.set(this.pageDetails, this.pageDetails.length, clone)
         },
         handleRowSaveClick(index) {
@@ -531,6 +541,8 @@ export default {
             this.dropElementIndex = data
         },
         rowsPositionChanged(rows) {
+
+            this.pageDetails = rows
             //for(let index = 0; index < rows.length; index++) {
             //    Vue.set(this.pageDetails, index, rows[index])
             //}
@@ -547,6 +559,8 @@ export default {
             const { columnIndex, rowIndex } = this.selectedColumn
             const { text } = data
             let column = this.pageDetails[rowIndex].column[columnIndex]
+            //console.log({ columnIndex, rowIndex, text })
+            //console.log("page data : ", this.pageDetails)
             Vue.set(this.pageDetails[rowIndex].column, columnIndex,  {...column, text })
             this.handleAddElementDataClose()
         },
