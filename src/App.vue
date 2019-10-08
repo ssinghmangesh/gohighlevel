@@ -509,8 +509,7 @@ export default {
         handleRowSettingClick(index) {
         },
         handleRowCloneclick(index) {
-            let c = this.pageDetails[index]
-            let clone = Object.assign({}, c)
+            let clone = JSON.parse(JSON.stringify(this.pageDetails[index]));
             Vue.set(this.pageDetails, this.pageDetails.length, clone)
         },
         handleRowSaveClick(index) {
